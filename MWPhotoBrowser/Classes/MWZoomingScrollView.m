@@ -29,6 +29,7 @@
 @implementation MWZoomingScrollView
 
 - (id)initWithPhotoBrowser:(MWPhotoBrowser *)browser {
+    self.scrollEnabled = NO;
     if ((self = [super init])) {
         
         // Setup
@@ -338,7 +339,11 @@
 }
 
 - (void)scrollViewWillBeginZooming:(UIScrollView *)scrollView withView:(UIView *)view {
-    self.scrollEnabled = YES; // reset
+    	if (self.zoomScale > 1.0f) { // check if it is zoomed in
+		self.scrollEnabled = NO;
+    	} else {
+		self.scrollEnabled = YES; // reset
+	}
 	[_photoBrowser cancelControlHiding];
 }
 
